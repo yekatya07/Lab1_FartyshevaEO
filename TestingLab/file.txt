@@ -1,3 +1,9 @@
 2023-09-22 19:43:32.271 +07:00 [INF] Равносторонний (0; 0), (10; 0), (5; 7,071067)
 2023-09-23 09:43:23.180 +07:00 [INF] Равносторонний (0; 0), (10; 0), (5; 7,071067)
 2023-09-23 09:43:47.932 +07:00 [INF] Равносторонний (0; 0), (10; 0), (5; 7,071067)
+2023-09-23 09:50:49.655 +07:00 [ERR] Пустая строка
+System.IndexOutOfRangeException: Индекс находился вне границ массива.
+   в TestingLab.Program.Main(String[] args) в C:\Users\Ekaterina\source\repos\TestingLab\TestingLab\Program.cs:строка 110
+2023-09-23 09:51:43.943 +07:00 [ERR] Пустая строка
+System.IndexOutOfRangeException: Индекс находился вне границ массива.
+   в TestingLab.Program.Main(String[] args) в C:\Users\Ekaterina\source\repos\TestingLab\TestingLab\Program.cs:строка 110

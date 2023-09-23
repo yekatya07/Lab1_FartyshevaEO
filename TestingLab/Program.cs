@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Configuration;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -104,8 +105,17 @@ namespace TestingLab
             float[] s = new float[2];
             float[] t = new float[2];
 
-            (type, f, s, t) = GoTriangle(lines[0], lines[1], lines[2]); // переход в метод, в котором происходят операции над треугольником
-                                                                        // по завершению выполнения метода возвращается тип треугольника, кординаты трёх его вершин, информация логируется
+            try
+            {
+                (type, f, s, t) = GoTriangle(lines[0], lines[1], lines[2]); // переход в метод, в котором происходят операции над треугольником
+                                                                            // по завершению выполнения метода возвращается тип треугольника, кординаты трёх его вершин, информация логируется
+            }
+            catch (Exception ex) // если передаём пустые строки, то выводится ошибка
+            {
+                string msg = "Пустая строка";
+                Log.Error(ex, msg);
+            }
+
             Log.CloseAndFlush(); // закрывается логгер
             Console.ReadKey();
         }
