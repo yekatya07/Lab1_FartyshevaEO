@@ -1,8 +1,10 @@
 ﻿using Serilog;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace TestingLab
@@ -27,8 +29,8 @@ namespace TestingLab
                     return ("", xy1, xy2, xy3);
                 }
 
-                if(f + s >= t && f + t >= s && s + t >= f) // если конвертируется успешно, проверяем, является ли треугольиком: сумма длины двух сторон в каждом случае должна
-                    // быть больше, чем длина третьей стороны
+                if (f + s >= t && f + t >= s && s + t >= f) // если конвертируется успешно, проверяем, является ли треугольиком: сумма длины двух сторон в каждом случае должна
+                                                            // быть больше, чем длина третьей стороны
                 { //случай, при котором у нас условие выполняется корректно, фигура является треугольником
                     string type = "";
 
@@ -38,14 +40,14 @@ namespace TestingLab
                     else type = "Разносторонний";
 
                     float[] xy1 = new float[] { 0, 0 }; // первая вершина треугольника лежит в точке (0; 0)
-                    float[] xy2 = new float[] {t, 0 }; // следующая по оси ординат находится в точке, а по абциссе отходит от начала координат на длину третьей стороны
+                    float[] xy2 = new float[] { t, 0 }; // следующая по оси ординат находится в точке, а по абциссе отходит от начала координат на длину третьей стороны
 
                     float cosA = (s * s + t * t - f * f) / (2 * s * t); // для получения третьей координаты по формуле через длины вычислим косинус угла, лежащего между первой и второй сторонами
                     float sinA = (float)Math.Sqrt(1 - cosA * cosA); // по формуле вычислим синус
                     float height = s * sinA; // также по формуле находим высоту по формуле синуса и прилежащей длины
 
                     float temp = (t * t - s * s + f * f) / (2 * f); // находим координаты третьей вершины
-                    float[] xy3 = new float[] {temp, (float)Math.Sqrt(height * height - temp * temp)};
+                    float[] xy3 = new float[] { temp, (float)Math.Sqrt(height * height - temp * temp) };
 
                     if (Math.Max(xy1[0], Math.Max(xy1[1], Math.Max(xy2[0], Math.Max(xy2[1], Math.Max(xy3[0], xy3[1]))))) > 80) // если значение координат выходит за пределы
                     { // определённого значения, масштабируем
@@ -86,26 +88,24 @@ namespace TestingLab
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Введите стороны треугольника");
-            while (true)
-            {
-                Log.Logger = new LoggerConfiguration()
-                .WriteTo.Console()
-                .WriteTo.File("C:\\Users\\Ekaterina\\source\\repos\\TestingLab\\TestingLab\\file.txt")
-               .CreateLogger(); // инициализация логгера
+            Log.Logger = new LoggerConfiguration()
+            .WriteTo.Console()
+            .WriteTo.File("C:\\Users\\Ekaterina\\source\\repos\\TestingLab\\TestingLab\\file.txt")
+           .CreateLogger(); // инициализация логгера
+            string[] line = new string[3];
 
-                string first = Console.ReadLine();
-                string second = Console.ReadLine();
-                string third = Console.ReadLine(); // ввод данных
-                string type;
-                float[] f = new float[2]; // переменные для хранения координат
-                float[] s = new float[2];
-                float[] t = new float[2];
+            string path = "C:\\Users\\Ekaterina\\source\\repos\\TestingLab\\TestingLab\\input.txt";
 
-                (type, f, s, t) = GoTriangle(first, second, third); // переход в метод, в котором происходят операции над треугольником
-                // по завершению выполнения метода возвращается тип треугольника, кординаты трёх его вершин, информация логируется
-                Log.CloseAndFlush(); // закрывается логгер
-            }
+            line = File.ReadAllLines(path);
+            string type;
+            float[] f = new float[2]; // переменные для хранения координат
+            float[] s = new float[2];
+            float[] t = new float[2];
+
+            (type, f, s, t) = GoTriangle(line[0], line[1], line[2]); // переход в метод, в котором происходят операции над треугольником
+                                                                     // по завершению выполнения метода возвращается тип треугольника, кординаты трёх его вершин, информация логируется
+            Log.CloseAndFlush(); // закрывается логгер
+            Console.ReadKey();
         }
     }
 }
